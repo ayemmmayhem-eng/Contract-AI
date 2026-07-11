@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContractAI — Smart Contract Intelligence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e2e8f0;
+    line-height: 1.6;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(10,10,15,0.95);
+    border-bottom: 1px solid rgba(99,102,241,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo { font-size: 1.5rem; font-weight: 800; color: #fff; }
+  .logo span { color: #6366f1; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta { background: #6366f1; color: #fff !important; padding: 10px 24px; border-radius: 8px; font-weight: 600; }
+  .nav-cta:hover { background: #4f46e5 !important; }
+
+  .hero {
+    text-align: center;
+    padding: 120px 40px 80px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.2) 0%, transparent 70%);
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.4);
+    color: #818cf8;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; line-height: 1.15; margin-bottom: 24px; color: #fff; }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, #6366f1, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p { max-width: 600px; margin: 0 auto 40px; color: #94a3b8; font-size: 1.15rem; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary { background: #6366f1; color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s, background 0.2s; display: inline-block; }
+  .btn-primary:hover { background: #4f46e5; transform: translateY(-2px); }
+
+  .btn-secondary { background: transparent; color: #e2e8f0; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s, transform 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: #6366f1; transform: translateY(-2px); }
+
+  .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 72px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2.2rem; font-weight: 900; color: #fff; display: block; }
+  .stat-num span { color: #6366f1; }
+  .stat-label { color: #64748b; font-size: 0.9rem; margin-top: 4px; }
+
+  section { padding: 100px 40px; }
+  .section-label { text-align: center; color: #6366f1; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: #fff; margin-bottom: 16px; }
+  .section-sub { text-align: center; color: #64748b; max-width: 560px; margin: 0 auto 64px; font-size: 1.05rem; }
+
+  #features { background: #0d0d14; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+
+  .feature-card { background: #13131f; border: 1px solid rgba(99,102,241,0.15); border-radius: 16px; padding: 36px 32px; transition: border-color 0.3s, transform 0.3s; }
+  .feature-card:hover { border-color: rgba(99,102,241,0.5); transform: translateY(-4px); }
+  .feature-icon { width: 52px; height: 52px; background: rgba(99,102,241,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; }
+  .feature-card h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .feature-card p { color: #64748b; font-size: 0.95rem; line-height: 1.65; }
+
+  #pricing { background: #0a0a0f; }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1000px; margin: 0 auto; align-items: start; }
+
+  .pricing-card { background: #13131f; border: 1px solid rgba(99,102,241,0.15); border-radius: 20px; padding: 40px 36px; position: relative; transition: transform 0.3s; }
+  .pricing-card:hover { transform: translateY(-4px); }
+  .pricing-card.popular { border-color: #6366f1; background: linear-gradient(180deg, rgba(99,102,241,0.08) 0%, #13131f 100%); }
+
+  .popular-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #6366f1; color: #fff; font-size: 0.78rem; font-weight: 700; padding: 5px 18px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+
+  .plan-name { font-size: 1rem; font-weight: 700; color: #818cf8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .plan-price { font-size: 3rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 6px; }
+  .plan-price sup { font-size: 1.4rem; vertical-align: top; margin-top: 8px; display: inline-block; }
+  .plan-price .period { font-size: 1rem; color: #64748b; font-weight: 400; }
+  .plan-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .plan-features { list-style: none; margin-bottom: 36px; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; color: #cbd5e1; font-size: 0.95rem; margin-bottom: 14px; }
+  .check { color: #6366f1; font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  .plan-btn { display: block; text-align: center; padding: 13px 0; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; width: 100%; }
+  .plan-btn.outline { background: transparent; border: 1px solid rgba(99,102,241,0.4); color: #818cf8; }
+  .plan-btn.outline:hover { border-color: #6366f1; background: rgba(99,102,241,0.08); }
+  .plan-btn.solid { background: #6366f1; color: #fff; }
+  .plan-btn.solid:hover { background: #4f46e5; }
+
+  .cta-section { background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(56,189,248,0.08)); border-top: 1px solid rgba(99,102,241,0.2); border-bottom: 1px solid rgba(99,102,241,0.2); text-align: center; padding: 100px 40px; }
+  .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin-bottom: 16px; }
+  .cta-section p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+  footer { background: #07070d; padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+  footer .logo { font-size: 1.2rem; }
+  footer p { color: #334155; font-size: 0.9rem; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: #475569; text-decoration: none; font-size: 0.9rem; }
+  .footer-links a:hover { color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Contract<span>AI</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#">Docs</a></li>
+    <li><a href="#" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="badge">AI-Powered Legal Intelligence</div>
+  <h1>Review Contracts<br><span class="gradient">10x Faster with AI</span></h1>
+  <p>ContractAI reads, analyzes, and flags risks in any contract within seconds — so your team spends time on decisions, not reading.</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-primary">Start Free Trial</a>
+    <a href="#" class="btn-secondary">Watch Demo →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">98<span>%</span></span><div class="stat-label">Accuracy Rate</div></div>
+    <div class="stat"><span class="stat-num">10<span>x</span></span><div class="stat-label">Faster Review</div></div>
+    <div class="stat"><span class="stat-num">5K<span>+</span></span><div class="stat-label">Teams Using ContractAI</div></div>
+    <div class="stat"><span class="stat-num">2M<span>+</span></span><div class="stat-label">Contracts Analyzed</div></div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need to review smarter</h2>
+  <p class="section-sub">From risk detection to clause extraction, ContractAI handles the heavy lifting so your legal team doesn't have to.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">⚡</div><h3>Instant Risk Analysis</h3><p>Upload any contract and get a full risk breakdown in under 30 seconds. Liability clauses, indemnity issues, and red flags — all highlighted automatically.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔍</div><h3>Smart Clause Extraction</h3><p>Automatically identify and extract key clauses — payment terms, termination conditions, IP rights — across any contract format or jurisdiction.</p></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><h3>Side-by-Side Comparison</h3><p>Compare multiple contract versions instantly. See exactly what changed between drafts with color-coded diffs and impact assessments.</p></div>
+    <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI Negotiation Insights</h3><p>Get AI-generated suggestions for negotiating better terms based on industry benchmarks and your historical contract data.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔒</div><h3>Enterprise-Grade Security</h3><p>SOC 2 Type II certified. All documents are encrypted at rest and in transit. Your contracts never train our models.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔗</div><h3>Seamless Integrations</h3><p>Connect with Salesforce, DocuSign, Google Drive, and 50+ tools your team already uses. One-click setup, no engineering required.</p></div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-title">Simple, transparent pricing</h2>
+  <p class="section-sub">Start free. Scale as you grow. No hidden fees, no surprises.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><sup>$</sup>0 <span class="period">/ mo</span></div>
+      <div class="plan-desc">Perfect for freelancers and individuals exploring AI contract review.</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 5 contracts / month</li>
+        <li><span class="check">✓</span> Basic risk analysis</li>
+        <li><span class="check">✓</span> PDF & DOCX support</li>
+        <li><span class="check">✓</span> Email support</li>
+      </ul>
+      <a href="#" class="plan-btn outline">Get Started Free</a>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>$</sup>49 <span class="period">/ mo</span></div>
+      <div class="plan-desc">For growing teams that review contracts regularly and need deeper insights.</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 100 contracts / month</li>
+        <li><span class="check">✓</span> Full risk & clause analysis</li>
+        <li><span class="check">✓</span> Version comparison</li>
+        <li><span class="check">✓</span> AI negotiation suggestions</li>
+        <li><span class="check">✓</span> Priority support</li>
+        <li><span class="check">✓</span> 3 team members</li>
+      </ul>
+      <a href="#" class="plan-btn solid">Start 14-Day Free Trial</a>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price" style="font-size:2.2rem;">Custom</div>
+      <div class="plan-desc">For legal departments and enterprises with high-volume contract workflows.</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Unlimited contracts</li>
+        <li><span class="check">✓</span> Custom AI model training</li>
+        <li><span class="check">✓</span> SSO & advanced security</li>
+        <li><span class="check">✓</span> API access</li>
+        <li><span class="check">✓</span> Dedicated success manager</li>
+        <li><span class="check">✓</span> Unlimited team members</li>
+      </ul>
+      <a href="#" class="plan-btn outline">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <h2>Ready to review contracts smarter?</h2>
+  <p>Join 5,000+ legal teams saving hours every week with ContractAI.</p>
+  <a href="#" class="btn-primary">Start Your Free Trial →</a>
+</div>
+
+<footer>
+  <div class="logo">Contract<span>AI</span></div>
+  <p>© 2026 ContractAI Inc. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Security</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
